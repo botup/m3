@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <div id="video-container" style="display: flex; align-items: center; justify-content: center;"></div>
+  <div id="video-container"></div>
   <div style="width:60%; height: 35px; background: #5daddd; margin-top: 5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;  line-height: 35px; color:#fff; text-align: center">
     <a href="https://botup.github.io/gob" style="text-decoration: none; color: #fff;">更多后续点击加群</a></div>
 </body>
@@ -71,7 +71,7 @@
        * PC ：RTMP>flv>m3u8>mp4
        */
       var options = {
-        m3u8: m3u8 || 'https://resource.luoye.icu/upload/cache/Lemon/1696261626868.m3u8',
+        m3u8: m3u8 || 'https://resource.luoye.icu/upload/cache/Lemon/1696213364025.m3u8',
         autoplay: autoplay,
         live: live,
         width: width || '100%',
@@ -84,6 +84,7 @@
         x5_fullscreen: 'true',
         h5_flv: h5_flv,
         preload: 'auto',
+        controls: 'system',
       };
       window.tcplayer = new TcPlayer('video-container', options);
     })();
