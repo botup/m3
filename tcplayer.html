@@ -60,14 +60,23 @@
         }
       }
 
-      var flash = (getParams('flash') == 'true' ? true : false),
-          flashUrl = (function () {
-            var params = getPathParams();
-            if (params) {
-              return params.path + '/player/release/QCPlayer.swf';
-            }
-            return '//imgcache.qq.com/open/qcloud/video/player/release/QCPlayer.swf'
-          })(),
+      var m3u8 = getParams('m3u8'),
+        live = (getParams('live') == 'true' ? true : false),
+        coverpic = getParams('coverpic'),
+        width = getParams('width'),
+        height = getParams('height'),
+        volume = getParams('volume'),
+        flash = (getParams('flash') == 'true' ? true : false),
+        x5_player = (getParams('x5_player') == 'true' ? true : false),
+        h5_flv = (getParams('h5_flv') == 'true' ? true : false),
+        autoplay = (getParams('autoplay') == 'true' ? true : false),
+        flashUrl = (function () {
+          var params = getPathParams();
+          if (params) {
+            return params.path + '/player/release/QCPlayer.swf';
+          }
+          return '//imgcache.qq.com/open/qcloud/video/player/release/QCPlayer.swf'
+        })(),
         log = getParams('log');
       /**
        * Video type playback priority
@@ -75,20 +84,19 @@
        * PC ：RTMP>flv>m3u8>mp4
        */
       var options = {
-        m3u8: 'https://resource.luoye.icu/upload/cache/Lemon/1696261626868.m3u8',
-        autoplay: true,
-        live: true,
-        width: '100%',
-        height: '100%',
-        volume: 0.5,
-        x5_player: true,
-        x5_type: 'h5-page',
-        x5_fullscreen: true,
-        h5_flv: true,
-        // controls: 'system',
-        // systemFullscreen: true,
+        m3u8: m3u8 || 'https://resource.luoye.icu/upload/cache/Lemon/1696261626868.m3u8',
+        autoplay: autoplay,
+        live: live,
+        width: width || '100%',
+        height: height || '100%',
+        volume: volume || 0.5,
         flash: flash,
         flashUrl: flashUrl,
+        x5_player: x5_player,
+        x5_type: 'h5-page',
+        h5_flv: h5_flv,
+        controls: 'system',
+        systemFullscreen: true,
       };
       window.tcplayer = new TcPlayer('video-container', options);
     })();
