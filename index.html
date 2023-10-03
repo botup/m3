@@ -1,52 +1,125 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>更多资源加Q群:444173748</title>
-    <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
-    <script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.min.js" type="text/javascript"></script>
-    <!-- videojs-contrib-hls 用于在电脑端播放 如果只需手机播放可以不引入 -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+  <title>更多资源加Q群:444173748</title>
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="msapplication-tap-highlight" content="no">
+  <!--<meta http-equiv="content-security-policy" content="block-all-mixed-content">-->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .vcp-error-tips {
+      color: #fff;
+    }
+    a {
+      color: #fff;
+    }
+  </style>
 </head>
+
 <body>
-    <style>
-        .video-js .vjs-tech {position: relative !important;}
-    </style>
-    <div>
-        <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered vjs-fullscreen-control" controls preload="auto" data-setup='{}' style='width:100%; max-width:100%; height:auto'>
-            <source id="source" src="https://resource.luoye.icu/upload/cache/Lemon/1696261626868.m3u8" type="application/x-mpegURL"></source>
-        </video>
-    </div>
-    <div class="qun" style="width:50%; height: 35px; background: #5daddd; margin-top: 5px; margin-left: auto; margin-right: auto; line-height: 35px; color:#fff; text-align: center">加入吃瓜群</div>
+  <div id="video-container"></div>
+  <div style="width:30%; height: 35px; background: #5daddd; margin-top: 5px; margin-left: auto; margin-right: auto; line-height: 35px; color:#fff; text-align: center">
+    <a href="https://botup.github.io/gob" style="text-decoration: none; color: #fff;">加入吃瓜群</a></div>
 </body>
- 
-<script>
-    // videojs 简单使用
-    var myVideo = videojs('myVideo', {
-        bigPlayButton: true,
-        textTrackDisplay: false,
-        posterImage: false,
-        errorDisplay: false,
-    })
-    myVideo.play()
-    var changeVideo = function (vdoSrc) {
-        if (/\.m3u8$/.test(vdoSrc)) { //判断视频源是否是m3u8的格式
-            myVideo.src({
-                src: vdoSrc,
-                type: 'application/x-mpegURL' //在重新添加视频源的时候需要给新的type的值
-            })
-        } else {
-            myVideo.src(vdoSrc)
+<!--Polyfill-->
+  <!--[if lt IE 9]>
+    <script src="//imgcache.qq.com/open/qcloud/video/vcplayer/libs/es5-shim.js"></script>
+    <script src="//imgcache.qq.com/open/qcloud/video/vcplayer/libs/es5-sham.js"></script>
+  <![endif]-->
+<script src="https://imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.3.3.js"></script>
+<script src="https://imgcache.qq.com/open/qcloud/video/vcplayer/demo/qrcode/qrcode.min.js"></script>
+<script>(function () {
+      function getParams(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+          return decodeURIComponent(r[2]);
         }
-        myVideo.load();
-        myVideo.play();
-    }
-    var jiaQun =function redirectToQun(url) {
-            window.location.href = url;
-    }
-    var qunLink = 'https://botup.github.io/gob';
-    document.querySelector('.qun').addEventListener('click', function () {
-        // changeVideo(qunLink);
-        jiaQun(qunLink)
-    })
+        return null;
+      }
+
+      function getPathParams() {
+        var path = location.pathname.split('/');
+        if (path[1] == 'vod-player') {
+          return {
+            'path': location.origin + path.slice(0, 4).join('/'),
+            'appid': path[2],
+            'fileid': path[3]
+          }
+        } else {
+          return null;
+        }
+      }
+
+      var
+        m3u8 = getParams('m3u8'),
+        live = (getParams('live') == 'true' ? true : false),
+        coverpic = getParams('coverpic'),
+        width = getParams('width'),
+        height = getParams('height'),
+        volume = getParams('volume'),
+        flash = (getParams('flash') == 'true' ? true : false),
+        x5_player = (getParams('x5_player') == 'false' ? false : true),
+        h5_flv = (getParams('h5_flv') == 'true' ? true : false),
+        autoplay = (getParams('autoplay') == 'true' ? true : false),
+        flashUrl = (function () {
+          var params = getPathParams();
+          if (params) {
+            return params.path + '/player/release/QCPlayer.swf';
+          }
+          return '//imgcache.qq.com/open/qcloud/video/player/release/QCPlayer.swf'
+        })(),
+        log = getParams('log');
+      /**
+       * Video type playback priority
+       * mobile ：m3u8>mp4
+       * PC ：RTMP>flv>m3u8>mp4
+       */
+      var options = {
+        m3u8: m3u8 || 'https://resource.luoye.icu/upload/cache/Lemon/1696261626868.m3u8',
+        autoplay: autoplay,
+        live: live,
+        width: width || '480',
+        height: height || '320',
+        volume: volume || 0.5,
+        flash: flash,
+        flashUrl: flashUrl,
+        x5_player: x5_player,
+        h5_flv: h5_flv,
+        wording: {
+          2032: 'Failed to request video, please check the network',
+          2048: 'Requesting the m3u8 file failed, it may be a network error or a cross-domain issue',
+          2: 'The video format Web player cannot decode. H5 indicates the error.'
+        },
+      };
+
+      window.tcplayer = new TcPlayer('video-container', options);
+      if (m3u8) m3u8Input.value = m3u8;
+      if (width) widthInput.value = width;
+      if (height) heightInput.value = height;
+      if (flash) document.querySelectorAll('[name="flash"]')[0].checked = true;
+      if (autoplay) document.querySelectorAll('[name="autoplay"]')[0].checked = true;
+      if (x5_player) document.querySelectorAll('[name="x5_player"]')[0].checked = true;
+      if (h5_flv) document.querySelectorAll('[name="h5_flv"]')[0].checked = true;
+
+      playBtn.onclick = function () {
+        var url = location.href.split('?')[0] + '?';
+        url += '&flash=' + (document.querySelectorAll('[name="flash"]')[0].checked ? 'true' : 'false');
+        url += '&autoplay=' + (document.querySelectorAll('[name="autoplay"]')[0].checked ? 'true' : 'false');
+        url += '&x5_player=' + (document.querySelectorAll('[name="x5_player"]')[0].checked ? 'true' : 'false');
+        url += '&h5_flv=' + (document.querySelectorAll('[name="h5_flv"]')[0].checked ? 'true' : 'false');
+        location.href = url;
+      };
+    })();
 </script>
+</html>
