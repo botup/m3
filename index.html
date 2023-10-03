@@ -1,44 +1,16 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-   <meta charset="UTF-8">  
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-   <title>M3U8 Player</title>  
-   <style>  
-       /* Remove any default styles */  
-       body, html {  
-           margin: 0;  
-           padding: 0;  
-           width: 100%;  
-           height: 100%;  
-           overflow: hidden;  
-       }
-       #player {  
-           position: absolute;  
-           top: 0;  
-           left: 0;  
-           width: 100%;  
-           height: 100%;  
-       }  
-   </style>  
-</head>  
-<body>  
-   <div id="player"></div>  
-   <script>  
-       const player = document.getElementById('player');  
-       const domain = 'botup.github.io/m3/index.html'; // Replace with your actual domain
-       // Replace this with the actual URL you want to parse  
-       const m3u8Url = 'http://' + domain + '/?url=https://resource.luoye.icu/upload/cache/Lemon/1696213676271.m3u8';
-       fetch(m3u8Url)  
-          .then(response => response.json())  
-          .then(data => {  
-               const playerContainer = player.getElementsByTagName('video')[0];  
-               const videoUrl = data.url;
-               // Set the video source and controls  
-               playerContainer.src = videoUrl;  
-               playerContainer.controls = true;  
-               playerContainer.play();  
-           });  
-   </script>  
-</body>  
-</html>  
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
+  <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+</head>
+<body>
+  <video id="my-video" class="video-js" controls preload="auto" width="640" height="360">
+    <source src="https://resource.luoye.icu/upload/cache/Lemon/1696261626868.m3u8" type="application/x-mpegURL">
+  </video>
+
+  <script>
+    var player = videojs('my-video');
+  </script>
+</body>
+</html>
