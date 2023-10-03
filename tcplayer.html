@@ -15,18 +15,16 @@
     body {
       margin: 0;
       padding: 0;
+      background: black;
     }
     .vcp-error-tips {
-      color: #fff;
-    }
-    a {
       color: #fff;
     }
   </style>
 </head>
 
 <body>
-  <div id="video-container"></div>
+  <div id="video-container" style="display: flex; align-items: center; justify-content: center;"></div>
   <div style="width:60%; height: 35px; background: #5daddd; margin-top: 5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;  line-height: 35px; color:#fff; text-align: center">
     <a href="https://botup.github.io/gob" style="text-decoration: none; color: #fff;">更多后续点击加群</a></div>
 </body>
@@ -94,9 +92,9 @@
         flashUrl: flashUrl,
         x5_player: x5_player,
         x5_type: 'h5-page',
+        x5_fullscreen: 'true',
         h5_flv: h5_flv,
-        controls: 'system',
-        systemFullscreen: true,
+        preload: 'auto',
       };
       window.tcplayer = new TcPlayer('video-container', options);
     })();
