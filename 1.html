@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
+  <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+</head>
+<body>
+  <video id="my-video" class="video-js" controls preload="auto">
+    <source src="https://resource.luoye.icu/upload/cache/Lemon/1696261626868.m3u8" type="application/x-mpegURL">
+  </video>
+
+  <script>
+    var player = videojs('my-video');
+
+    // 监听播放事件
+    player.on('play', function() {
+      // 请求全屏播放
+      if (player.requestFullscreen) {
+        player.requestFullscreen();
+      } else if (player.mozRequestFullScreen) { // 兼容 Firefox
+        player.mozRequestFullScreen();
+      } else if (player.webkitRequestFullscreen) { // 兼容 Chrome、Safari 和 Opera
+        player.webkitRequestFullscreen();
+      } else if (player.msRequestFullscreen) { // 兼容 IE/Edge
+        player.msRequestFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>
