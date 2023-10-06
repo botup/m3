@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>点击播放并分享到QQ群</title>
+</head>
+<body>
+  <button id="playButton">点击播放</button>
+
+  <script src="https://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"></script>
+  <script>
+      // 获取播放按钮元素
+    var playButton = document.getElementById('playButton');
+    
+    // 添加点击事件监听器
+    playButton.addEventListener('click', function() {
+      // 弹出分享窗口
+      shareToQQGroup();
+    });
+    
+    // 分享到QQ群的函数
+    function shareToQQGroup() {
+      // 调用 QQ 分享 API
+      if (typeof (mqq) !== 'undefined') {
+        mqq.ui.shareMessage({
+          title: '分享标题',
+          desc: '分享描述',
+          share_url: '分享链接',
+          image_url: '分享图片链接',
+          share_type: 1,
+          back: true
+        }, function(result) {
+          // 分享完成后的回调函数
+          if (result.retCode === 0) {
+            // 分享成功，执行播放操作
+            playMedia();
+          } else {
+            // 分享失败或取消分享，不执行播放操作
+            console.log('分享失败或取消分享');
+          }
+        });
+      } else {
+        console.log('QQ分享API加载失败');
+      }
+    }
+    
+    // 播放媒体的函数
+    function playMedia() {
+      // 在这里执行播放操作，例如切换视频显示或播放音频等
+      console.log('开始播放');
+    }
+  </script>
+</body>
+</html>
